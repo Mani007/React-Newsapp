@@ -24,9 +24,10 @@ import './App.css';
 import React, { Component } from 'react'
 
 export default class App extends Component {
+  name = "Jacob"
   render() {
     return (
-      <div>First Class based component </div>
+      <div>First Class based component <strong>{this.name}</strong> </div>
     )
   }
 }
