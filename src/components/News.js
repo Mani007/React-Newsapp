@@ -68,19 +68,17 @@ export default class News extends Component {
     return (
       <div className="container my-3">
         <strong>Latest News</strong>
-        {this.state.article.map((element)=>{console.log(element)})}
+        
         <div className="container">
+          
           <div className="row">
-            <div className="col-sm col-md-4">
-            <NewsItem title="Title 1" discription="This is ONE discription" imageURL="https://i.kinja-img.com/gawker-media/image/upload/c_fill,f_auto,fl_progressive,g_center,h_675,pg_1,q_80,w_1200/c8e3b3fe0595dfbab3656a5ba0e06e2c.jpg" url="/"/>
+          {this.state.article.map((element)=>{
+          //console.log(element)
+          return <div className="col-sm col-md-4" key={element.url}>
+            <NewsItem title={element.title} discription={element.description} imageURL={element.urlToImage} url={element.url}/>
             </div>
-            <div className="col-sm col-md-4">
-            <NewsItem title="Title 2" discription="This is TWO discription" imageURL="https://www.reuters.com/resizer/x2f-ufmS3E4Gt5u8Lu24vQUPfDA=/1200x628/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/U57W2HJZGRPTHE2MEDPR5RDSHQ.jpg" url="/"/>
-            </div>
-            <div className="col-sm col-md-4">
-            <NewsItem title="Title 3" discription="This is THREE discription" imageURL="https://cdn.benzinga.com/files/images/story/2023/01/15/kanchanara-4kjjezdyo3m-unsplash.jpg?width=1200&height=800&fit=crop" url="/"/>
-            </div>
-
+          })}
+            
           </div>
         </div>
                 
