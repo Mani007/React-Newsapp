@@ -55,6 +55,11 @@ export default class News extends Component {
     "publishedAt": "2023-01-10T06:15:00Z",
     "content": "Jan 10 (Reuters) - Bitcoin's looking steady in 2023. But it's only been a week.\r\nCryptocurrencies have crept into the new year, licking their wounds after the carnage of 2022. The overall global cryp… [+3311 chars]"
     }]
+  constructor(){
+    super();
+    console.log("This is news component")
+  }
+  
   render() {
     return (
       <div className="container my-3">
