@@ -36,7 +36,7 @@ export default class News extends Component {
     },
     "author": "Mehab Qureshi",
     "title": "Bitcoin Surges Above $21K, Ethereum, Dogecoin Rally Intact — Analyst Says This 'Could Awaken Some Dormant Long-Term Bulls' - Benzinga",
-    "description": "<ol><li>Bitcoin Surges Above $21K, Ethereum, Dogecoin Rally Intact — Analyst Says This 'Could Awaken Some Dormant Long-Term Bulls'  Benzinga\r\n</li><li>Bitcoin roars past $20K in surprise surge. Can the rally last?  Fortune\r\n</li><li>Bitcoin rises 5.6% to $210…",
+    "description": "Bitcoin Surges Above $21K, Ethereum, Dogecoin Rally Intact — Analyst Says This 'Could Awaken Some Dormant Long-Term Bulls'  Benzinga\r\n</li><li>Bitcoin roars past $20K in surprise surge. Can the rally last?  Fortune Bitcoin rises 5.6% to $210…",
     "url": "https://www.benzinga.com/markets/cryptocurrency/23/01/30424910/bitcoin-surges-above-21k-ethereum-dogecoin-rally-intact-analyst-says-this-could-awaken-som",
     "urlToImage": "https://cdn.benzinga.com/files/images/story/2023/01/15/kanchanara-4kjjezdyo3m-unsplash.jpg?width=1200&height=800&fit=crop",
     "publishedAt": "2023-01-16T02:50:45Z",
@@ -59,7 +59,8 @@ export default class News extends Component {
     super();
     console.log("This is news component")
     this.state = {
-      article: this.article
+      article: this.article,  //never sggested to do tis way, use setState method insted
+      loading: false
     }
   }
   
@@ -67,6 +68,7 @@ export default class News extends Component {
     return (
       <div className="container my-3">
         <strong>Latest News</strong>
+        {this.state.article.map((element)=>{console.log(element)})}
         <div className="container">
           <div className="row">
             <div className="col-sm col-md-4">
