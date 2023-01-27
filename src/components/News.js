@@ -57,7 +57,7 @@ export default class News extends Component {
     }]
   constructor(){
     super();
-    console.log("This is news component")
+    //console.log("This is news component")
     this.state = {
       article: this.article,  //never sggested to do tis way, use setState method insted
       loading: false
