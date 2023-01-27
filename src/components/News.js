@@ -58,6 +58,9 @@ export default class News extends Component {
   constructor(){
     super();
     console.log("This is news component")
+    this.state = {
+      article: this.article
+    }
   }
   
   render() {
