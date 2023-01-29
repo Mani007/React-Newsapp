@@ -63,24 +63,44 @@ export default class News extends Component {
     //   loading: false
     // }
     this.state = {
-      article: []
+      article: [],
+      loading: false,
+      page: 1
     }
   }
   
  
  async componentDidMount(){
-    let ul = "https://newsapi.org/v2/everything?q=bitcoin&apiKey=55b6af0e20244159ba52fddbe7ffac82";
+    let ul = "https://newsapi.org/v2/top-headlines?country=in&apiKey=55b6af0e20244159ba52fddbe7ffac82";
     let data = await fetch(ul);
     let parsedata = await data.json()
     this.setState({article: parsedata.articles})
-    console.log(parsedata)
-
+    //console.log(parsedata)
   }
 
-  render() {
+handleNext = async ()=>{
+  let ul = `https://newsapi.org/v2/top-headlines?country=in&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page + 1}`;
+  let data = await fetch(ul);
+  let parsedata = await data.json()
+  this.setState({
+    article: parsedata.articles,
+    page: this.state.page +1
+  })
+}
+handlePrev = async () => {
+  let ul = `https://newsapi.org/v2/top-headlines?country=in&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page - 1}`;
+  let data = await fetch(ul);
+  let parsedata = await data.json()
+  this.setState({
+    article: parsedata.articles,
+    page: this.state.page -1
+  })
+}
+  
+render() {
     return (
       <div className="container my-3">
-        <strong>Latest News</strong>
+        <h3><strong>Latest News</strong></h3>
         
         <div className="container">
           
@@ -92,6 +112,10 @@ export default class News extends Component {
             </div>
           })}
             
+          </div>
+          <div className="container my-3 d-flex justify-content-between">
+          <button disabled={this.state.page <=1} type="button" className="btn btn-info" onClick={this.handlePrev}>&larr; Previous</button>
+          <button type="button" className="btn btn-info" onClick={this.handleNext}>Next &rarr;</button>
           </div>
         </div>
                 
