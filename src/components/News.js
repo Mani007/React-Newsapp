@@ -58,12 +58,25 @@ export default class News extends Component {
   constructor(){
     super();
     //console.log("This is news component")
+    // this.state = {
+    //   article: this.article,  //never sggested to do tis way, use setState method insted
+    //   loading: false
+    // }
     this.state = {
-      article: this.article,  //never sggested to do tis way, use setState method insted
-      loading: false
+      article: []
     }
   }
   
+ 
+ async componentDidMount(){
+    let ul = "https://newsapi.org/v2/everything?q=bitcoin&apiKey=55b6af0e20244159ba52fddbe7ffac82";
+    let data = await fetch(ul);
+    let parsedata = await data.json()
+    this.setState({article: parsedata.articles})
+    console.log(parsedata)
+
+  }
+
   render() {
     return (
       <div className="container my-3">
@@ -75,7 +88,7 @@ export default class News extends Component {
           {this.state.article.map((element)=>{
           //console.log(element)
           return <div className="col-sm col-md-4" key={element.url}>
-            <NewsItem title={element.title.slice(0,45)} discription={element.description.slice(0,70)} imageURL={element.urlToImage} url={element.url}/>
+            <NewsItem title={element.title?element.title.slice(0,45):""} discription={element.description?element.description.slice(0,70):""} imageURL={element.urlToImage} url={element.url}/>
             </div>
           })}
             
