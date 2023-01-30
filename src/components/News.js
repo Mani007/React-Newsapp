@@ -73,9 +73,10 @@ export default class News extends Component {
  
  async componentDidMount(){
     let ul = `https://newsapi.org/v2/top-headlines?country=in&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=1&pageSize=${this.props.pageSize}`;
+    this.setState({loading: true})
     let data = await fetch(ul);
     let parsedata = await data.json()
-    this.setState({article: parsedata.articles, totalResults: parsedata.totalResults})
+    this.setState({article: parsedata.articles, totalResults: parsedata.totalResults, loading: false})
     //console.log(parsedata)
   }
 
@@ -84,20 +85,24 @@ handleNext = async ()=>{
 
   } else {
   let ul = `https://newsapi.org/v2/top-headlines?country=in&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
+  this.setState({loading: true})
   let data = await fetch(ul);
   let parsedata = await data.json()
   this.setState({
     article: parsedata.articles,
-    page: this.state.page +1
+    page: this.state.page +1,
+    loading: false
   })
 }}
 handlePrev = async () => {
   let ul = `https://newsapi.org/v2/top-headlines?country=in&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
+  this.setState({loading: true})
   let data = await fetch(ul);
   let parsedata = await data.json()
   this.setState({
     article: parsedata.articles,
-    page: this.state.page -1
+    page: this.state.page -1,
+    loading: false
   })
 }
   
@@ -105,7 +110,7 @@ render() {
     return (
       <div className="container my-3 text-center">
         <h3><strong>Latest News</strong></h3>
-        <Loading/>
+        {this.state.loading && <Loading/>}
         
         <div className="container">
           
