@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Loading from "./Loading";
 import NewsItem from "./NewsItem";
 
 export default class News extends Component {
@@ -102,8 +103,9 @@ handlePrev = async () => {
   
 render() {
     return (
-      <div className="container my-3">
+      <div className="container my-3 text-center">
         <h3><strong>Latest News</strong></h3>
+        <Loading/>
         
         <div className="container">
           
@@ -118,7 +120,7 @@ render() {
           </div>
           <div className="container my-3 d-flex justify-content-between">
           <button disabled={this.state.page <=1} type="button" className="btn btn-info" onClick={this.handlePrev}>&larr; Previous</button>
-          <button type="button" className="btn btn-info" onClick={this.handleNext}>Next &rarr;</button>
+          <button disabled={this.state.page + 1> Math.ceil(this.state.totalResults/20)} type="button" className="btn btn-info" onClick={this.handleNext}>Next &rarr;</button>
           </div>
         </div>
                 
