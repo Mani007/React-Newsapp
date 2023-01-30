@@ -72,7 +72,7 @@ export default class News extends Component {
   
  
  async componentDidMount(){
-    let ul = "https://newsapi.org/v2/top-headlines?country=in&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=1&pageSize=20}";
+    let ul = `https://newsapi.org/v2/top-headlines?country=in&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=1&pageSize=${this.props.pageSize}`;
     let data = await fetch(ul);
     let parsedata = await data.json()
     this.setState({article: parsedata.articles, totalResults: parsedata.totalResults})
@@ -83,7 +83,7 @@ handleNext = async ()=>{
   if (this.state.page + 1> Math.ceil(this.state.totalResults/20)){
 
   } else {
-  let ul = `https://newsapi.org/v2/top-headlines?country=in&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page + 1}&pageSize=20`;
+  let ul = `https://newsapi.org/v2/top-headlines?country=in&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
   let data = await fetch(ul);
   let parsedata = await data.json()
   this.setState({
@@ -92,7 +92,7 @@ handleNext = async ()=>{
   })
 }}
 handlePrev = async () => {
-  let ul = `https://newsapi.org/v2/top-headlines?country=in&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page - 1}&pageSize=20`;
+  let ul = `https://newsapi.org/v2/top-headlines?country=in&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
   let data = await fetch(ul);
   let parsedata = await data.json()
   this.setState({
