@@ -32,7 +32,7 @@ export default class App extends Component {
       // <div>First Class based component <strong>{this.name}</strong> </div>
       <>
       <NavBar/>
-      <News pageSize={6} />
+      <News pageSize={6} country="in" category="business"/>
       {/* <News pageSize="6" />  This is also working*/}
       </>
       

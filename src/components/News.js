@@ -1,8 +1,19 @@
 import React, { Component } from "react";
 import Loading from "./Loading";
 import NewsItem from "./NewsItem";
+import PropTypes from 'prop-types'
 
 export default class News extends Component {
+  static defaultProps = {
+    country: "in",
+    pageSize: 9
+  }
+
+  static propsTypes = {
+    country: PropTypes.string,
+    pageSize: PropTypes.number
+
+  }
   // article = [
   //   {
   //   "source": {
@@ -72,7 +83,7 @@ export default class News extends Component {
   
  
  async componentDidMount(){
-    let ul = `https://newsapi.org/v2/top-headlines?country=in&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=1&pageSize=${this.props.pageSize}`;
+    let ul = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=1&pageSize=${this.props.pageSize}`;
     this.setState({loading: true})
     let data = await fetch(ul);
     let parsedata = await data.json()
@@ -84,7 +95,7 @@ handleNext = async ()=>{
   if (this.state.page + 1> Math.ceil(this.state.totalResults/20)){
 
   } else {
-  let ul = `https://newsapi.org/v2/top-headlines?country=in&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
+  let ul = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
   this.setState({loading: true})
   let data = await fetch(ul);
   let parsedata = await data.json()
@@ -95,7 +106,7 @@ handleNext = async ()=>{
   })
 }}
 handlePrev = async () => {
-  let ul = `https://newsapi.org/v2/top-headlines?country=in&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
+  let ul = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
   this.setState({loading: true})
   let data = await fetch(ul);
   let parsedata = await data.json()
