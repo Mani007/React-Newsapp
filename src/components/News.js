@@ -6,12 +6,14 @@ import PropTypes from 'prop-types'
 export default class News extends Component {
   static defaultProps = {
     country: "in",
-    pageSize: 9
+    pageSize: 9,
+    category: "business"
   }
 
   static propsTypes = {
     country: PropTypes.string,
-    pageSize: PropTypes.number
+    pageSize: PropTypes.number,
+    category: PropTypes.string
 
   }
   // article = [
@@ -120,7 +122,7 @@ handlePrev = async () => {
 render() {
     return (
       <div className="container my-3 text-center">
-        <h3><strong>Latest News</strong></h3>
+        <h3><strong>Top Investment Oppurtunity</strong></h3>
         {this.state.loading && <Loading/>}
         
         <div className="container">
