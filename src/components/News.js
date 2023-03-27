@@ -83,40 +83,25 @@ export default class News extends Component {
     }
   }
   
- 
- async componentDidMount(){
-    let ul = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=1&pageSize=${this.props.pageSize}`;
+  async newsUpdate(){
+    const ul = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     this.setState({loading: true})
     let data = await fetch(ul);
     let parsedata = await data.json()
     this.setState({article: parsedata.articles, totalResults: parsedata.totalResults, loading: false})
-    //console.log(parsedata)
+  }
+ 
+ async componentDidMount(){
+    this.newsUpdate()
   }
 
 handleNext = async ()=>{
-  if (this.state.page + 1> Math.ceil(this.state.totalResults/20)){
-
-  } else {
-  let ul = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
-  this.setState({loading: true})
-  let data = await fetch(ul);
-  let parsedata = await data.json()
-  this.setState({
-    article: parsedata.articles,
-    page: this.state.page +1,
-    loading: false
-  })
-}}
+  this.setState({page: this.state.page +1})
+  this.newsUpdate()
+}
 handlePrev = async () => {
-  let ul = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
-  this.setState({loading: true})
-  let data = await fetch(ul);
-  let parsedata = await data.json()
-  this.setState({
-    article: parsedata.articles,
-    page: this.state.page -1,
-    loading: false
-  })
+  this.setState({page: this.state.page -1})
+  this.newsUpdate()
 }
   
 render() {
