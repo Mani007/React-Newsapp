@@ -1,21 +1,21 @@
 import React, { Component } from "react";
 import Loading from "./Loading";
 import NewsItem from "./NewsItem";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default class News extends Component {
   static defaultProps = {
     country: "in",
     pageSize: 9,
-    category: "business"
-  }
+    category: "business",
+  };
 
   static propsTypes = {
     country: PropTypes.string,
     pageSize: PropTypes.number,
-    category: PropTypes.string
-
-  }
+    category: PropTypes.string,
+  };
   // article = [
   //   {
   //   "source": {
@@ -69,7 +69,7 @@ export default class News extends Component {
   //   "publishedAt": "2023-01-10T06:15:00Z",
   //   "content": "Jan 10 (Reuters) - Bitcoin's looking steady in 2023. But it's only been a week.\r\nCryptocurrencies have crept into the new year, licking their wounds after the carnage of 2022. The overall global cryp… [+3311 chars]"
   //   }]
-  constructor(){
+  constructor() {
     super();
     //console.log("This is news component")
     // this.state = {
@@ -78,56 +78,93 @@ export default class News extends Component {
     // }
     this.state = {
       article: [],
-      loading: false,
-      page: 1
-    }
-  }
-  
-  async newsUpdate(){
-    const ul = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page}&pageSize=${this.props.pageSize}`;
-    this.setState({loading: true})
-    let data = await fetch(ul);
-    let parsedata = await data.json()
-    this.setState({article: parsedata.articles, totalResults: parsedata.totalResults, loading: false})
-  }
- 
- async componentDidMount(){
-    this.newsUpdate()
+      loading: true,
+      page: 1,
+      totalResults: 0
+    };
   }
 
-handleNext = async ()=>{
-  this.setState({page: this.state.page +1})
-  this.newsUpdate()
-}
-handlePrev = async () => {
-  this.setState({page: this.state.page -1})
-  this.newsUpdate()
-}
-  
-render() {
+  fetchMoreData = async() => {
+    this.setState({page: this.state.page +1})
+    const ul = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    let data = await fetch(ul);
+    let parsedata = await data.json();
+    this.setState({
+      article: this.state.article.concat(parsedata.articles),
+      totalResults: parsedata.totalResults,
+      loading: false,
+    });
+  };
+
+  async newsUpdate() {
+    const ul = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    this.setState({ loading: true });
+    let data = await fetch(ul);
+    let parsedata = await data.json();
+    this.setState({
+      article: parsedata.articles,
+      totalResults: parsedata.totalResults,
+      loading: false,
+    });
+  }
+
+  async componentDidMount() {
+    this.newsUpdate();
+  }
+
+  // handleNext = async () => {
+  //   this.setState({ page: this.state.page + 1 });
+  //   this.newsUpdate();
+  // };
+  // handlePrev = async () => {
+  //   this.setState({ page: this.state.page - 1 });
+  //   this.newsUpdate();
+  // };
+
+  render() {
     return (
-      <div className="container my-3 text-center">
-        <h3><strong>Top Investment Oppurtunity</strong></h3>
-        {this.state.loading && <Loading/>}
-        
-        <div className="container">
+      <>
+        <h3>
+          <strong>Top Investment Oppurtunity</strong>
+        </h3>
+        {/* {this.state.loading && <Loading />} */}
+
+        <InfiniteScroll
+          dataLength={this.state.article.length}
+          next={this.fetchMoreData}
+          hasMore={this.state.article.length !== this.state.totalResults}
+          loader={this.state.loading && <Loading/>}
+        >
           
+        <div className="container my-3 text-center">
           <div className="row">
-          {this.state.article.map((element)=>{
-          //console.log(element)
-          return <div className="col-sm col-md-4" key={element.url}>
-            <NewsItem title={element.title?element.title.slice(0,45):""} discription={element.description?element.description.slice(0,70):""} imageURL={element.urlToImage?element.urlToImage:"https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"} url={element.url}/>
-            </div>
-          })}
-            
+            {this.state.article.map((element) => {
+              //console.log(element)
+              return (
+                <div className="col-sm col-md-4" key={element.url}>
+                  <NewsItem
+                    title={element.title ? element.title.slice(0, 45) : ""}
+                    discription={
+                      element.description
+                        ? element.description.slice(0, 70)
+                        : ""
+                    }
+                    imageURL={
+                      element.urlToImage
+                        ? element.urlToImage
+                        : "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+                    }
+                    url={element.url}
+                  />
+                </div>
+              );
+            })}
           </div>
-          <div className="container my-3 d-flex justify-content-between">
-          <button disabled={this.state.page <=1} type="button" className="btn btn-info" onClick={this.handlePrev}>&larr; Previous</button>
-          <button disabled={this.state.page + 1> Math.ceil(this.state.totalResults/20)} type="button" className="btn btn-info" onClick={this.handleNext}>Next &rarr;</button>
           </div>
-        </div>
-                
-      </div>
+          </InfiniteScroll>
+         
+        
+        </>
     );
   }
 }
