@@ -133,7 +133,7 @@ export default class News extends Component {
           dataLength={this.state.article.length}
           next={this.fetchMoreData}
           hasMore={this.state.article.length !== this.state.totalResults}
-          loader={this.state.loading && <Loading/>}
+          loader={ <Loading/>}
         >
           
         <div className="container my-3 text-center">
