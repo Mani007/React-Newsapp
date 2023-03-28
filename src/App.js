@@ -24,27 +24,81 @@ import React, { Component } from "react";
 import NavBar from "./components/NavBar";
 import News from "./components/News";
 import { Route, Routes } from "react-router-dom";
+import LoadingBar from "react-top-loading-bar";
 
 export default class App extends Component {
- 
+  state = {
+    progress: 0
+  }
+
+  setProgress = (progress) => {
+    this.setState({
+      progress: progress
+    })
+  }
   render() {
     return (
       // <div>First Class based component <strong>{this.name}</strong> </div>
       <>
-       
-          <NavBar />
-          <Routes>
-            <Route exact path="/" element={<News key="in" pageSize={6} country="in" category="business" />}></Route>
-            <Route exact path="/Portugal" element={<News key="pt" pageSize={6} country="pt" category="business" />} ></Route>
-            <Route exact path="/Japan" element={<News key="jp" pageSize={6} country="jp" category="business" />}></Route>
-            <Route exact path="/US" element={<News key="us" pageSize={6} country="us" category="business" />}></Route>
-            <Route exact path="/Singapore" element={<News key="si" pageSize={6} country="si" category="business" />}></Route>
-            <Route exact path="/Germany" element={<News key="de" pageSize={6} country="de" category="business" />}></Route>
-            <Route exact path="/France" element={<News key="fr" pageSize={6} country="fr" category="business" />}></Route>
-          </Routes>
-          {/* <News pageSize={6} country="us" category="business" /> */}
-          {/* <News pageSize="6" />  This is also working*/}
-       
+        <NavBar />
+        <LoadingBar
+          color="#f11946"
+          progress={this.state.progress}
+          
+        />
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <News setProgress={this.setProgress} key="in" pageSize={6} country="in" category="business" />
+            }
+          ></Route>
+          <Route
+            exact
+            path="/Portugal"
+            element={
+              <News setProgress={this.setProgress} key="pt" pageSize={6} country="pt" category="business" />
+            }
+          ></Route>
+          <Route
+            exact
+            path="/Japan"
+            element={
+              <News setProgress={this.setProgress} key="jp" pageSize={6} country="jp" category="business" />
+            }
+          ></Route>
+          <Route
+            exact
+            path="/US"
+            element={
+              <News setProgress={this.setProgress} key="us" pageSize={6} country="us" category="business" />
+            }
+          ></Route>
+          <Route
+            exact
+            path="/Singapore"
+            element={
+              <News setProgress={this.setProgress} key="si" pageSize={6} country="si" category="business" />
+            }
+          ></Route>
+          <Route
+            exact
+            path="/Germany"
+            element={
+              <News setProgress={this.setProgress} key="de" pageSize={6} country="de" category="business" />
+            }
+          ></Route>
+          <Route
+            exact
+            path="/France"
+            element={
+              <News setProgress={this.setProgress} key="fr" pageSize={6} country="fr" category="business" />
+            }
+          ></Route>
+        </Routes>
+        {/* <News setProgress={setProgress} pageSize={6} country="us" category="business" /> */}
+        {/* <News setProgress={setProgress} pageSize="6" />  This is also working*/}
       </>
     );
   }

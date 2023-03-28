@@ -9,12 +9,14 @@ export default class News extends Component {
     country: "in",
     pageSize: 9,
     category: "business",
+   
   };
 
   static propsTypes = {
     country: PropTypes.string,
     pageSize: PropTypes.number,
     category: PropTypes.string,
+    
   };
   // article = [
   //   {
@@ -85,27 +87,35 @@ export default class News extends Component {
   }
 
   fetchMoreData = async() => {
+    this.props.setProgress(10)
     this.setState({page: this.state.page +1})
     const ul = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     let data = await fetch(ul);
+    this.props.setProgress(50)
     let parsedata = await data.json();
+    this.props.setProgress(70)
     this.setState({
       article: this.state.article.concat(parsedata.articles),
       totalResults: parsedata.totalResults,
       loading: false,
     });
+    this.props.setProgress(100)
   };
 
   async newsUpdate() {
+    this.props.setProgress(10)
     const ul = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=55b6af0e20244159ba52fddbe7ffac82&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     this.setState({ loading: true });
     let data = await fetch(ul);
+    this.props.setProgress(50)
     let parsedata = await data.json();
+    this.props.setProgress(70)
     this.setState({
       article: parsedata.articles,
       totalResults: parsedata.totalResults,
       loading: false,
     });
+    this.props.setProgress(100)
   }
 
   async componentDidMount() {
