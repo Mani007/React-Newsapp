@@ -27,6 +27,7 @@ import { Route, Routes } from "react-router-dom";
 import LoadingBar from "react-top-loading-bar";
 
 export default class App extends Component {
+  apikey = process.env.REACT_APP_API_KEY
   state = {
     progress: 0
   }
@@ -52,49 +53,49 @@ export default class App extends Component {
             exact
             path="/"
             element={
-              <News setProgress={this.setProgress} key="in" pageSize={6} country="in" category="business" />
+              <News setProgress={this.setProgress} apikey={this.apikey} key="in" pageSize={6} country="in" category="business" />
             }
           ></Route>
           <Route
             exact
             path="/Portugal"
             element={
-              <News setProgress={this.setProgress} key="pt" pageSize={6} country="pt" category="business" />
+              <News setProgress={this.setProgress} apikey={this.apikey} key="pt" pageSize={6} country="pt" category="business" />
             }
           ></Route>
           <Route
             exact
             path="/Japan"
             element={
-              <News setProgress={this.setProgress} key="jp" pageSize={6} country="jp" category="business" />
+              <News setProgress={this.setProgress} apikey={this.apikey} key="jp" pageSize={6} country="jp" category="business" />
             }
           ></Route>
           <Route
             exact
             path="/US"
             element={
-              <News setProgress={this.setProgress} key="us" pageSize={6} country="us" category="business" />
+              <News setProgress={this.setProgress} apikey={this.apikey} key="us" pageSize={6} country="us" category="business" />
             }
           ></Route>
           <Route
             exact
             path="/Singapore"
             element={
-              <News setProgress={this.setProgress} key="si" pageSize={6} country="si" category="business" />
+              <News setProgress={this.setProgress} apikey={this.apikey} key="si" pageSize={6} country="si" category="business" />
             }
           ></Route>
           <Route
             exact
             path="/Germany"
             element={
-              <News setProgress={this.setProgress} key="de" pageSize={6} country="de" category="business" />
+              <News setProgress={this.setProgress} apikey={this.apikey} key="de" pageSize={6} country="de" category="business" />
             }
           ></Route>
           <Route
             exact
             path="/France"
             element={
-              <News setProgress={this.setProgress} key="fr" pageSize={6} country="fr" category="business" />
+              <News setProgress={this.setProgress} apikey={this.apikey} key="fr" pageSize={6} country="fr" category="business" />
             }
           ></Route>
         </Routes>
